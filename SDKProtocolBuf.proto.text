@@ -1,0 +1,186 @@
+syntax = "proto3"; 
+package facesdk; //通常都要为.proto文件增加一个package声明符，用来防止不同的消息类型有命名冲突。
+option java_package = "com.slfinance.facesdk.protoc"; //指定生成Java文件的包名
+option java_outer_classname = "UpLoadProtoc"; //指定生成的Java文件的类名
+//int32是int int64是long 
+message ContactInfo {
+	//联系人姓名
+	string name = 1;
+	//联系人电话号码
+	string number = 2;
+	//头像ID
+	int64 photoId = 3;
+	//联系人ID
+	int32 contactId = 4;
+	//联系人最后更新 时间戳
+	string lastUpdate = 5;
+	//获取联系人照片uri
+	string photoUri = 6;
+	//获取联系人缩略图照片uri
+	string photoThumbnailUri = 7;
+	//有无手机号  0没有  1有
+	string hasPhoneNumber = 8;
+}	
+
+	message SMSInfo1{
+		//短信ID
+		int64 id = 1;
+		//对话ID 
+		int64 tread_id = 2;
+		//发件人手机号码
+		string address = 3;
+		//短信服务中心号码编号，通过该服务中心作为中间件来发送短信，没有则为null
+		string service_center = 4;
+		//短信发信人在本机联系人列表里的序号，陌生人为-1
+		int32 persion = 5;
+		//短信接收时间戳
+		 int64 date = 6;
+		//短信发送时间戳
+		 int64 date_sent = 7;
+		//短信协议，分为：0 SMS_PROTO,1 MMS_PROTO
+		 int32 protocol = 8;
+		//是否已阅读:0 未读，1 已读
+		 int32 read = 9;
+		//是否已通知告知用户：0 未显示Notification，1 已显示Notification
+		 int32 seen = 10;
+	}
+	
+	
+	message SMSInfo2{
+		//短信发送状态：-1 已接收，0 complete已发送完成，32 pending发送中，64 failed发送失败	
+		 int32 status = 1;
+		//短信类型：0 ALL(全部)，1 INBOX(收件箱)，2 SENT(已发送)，3 DRAFT(草稿箱)，4 OUTBOX(发件箱)，5 FAILED(发送失败)，6 QUEUED(待发送列表)
+		 int32 type = 2;
+		//短信主题，如无则返回null
+		 string subject = 3;
+		//短信内容
+		 string body = 4;
+		 string reply_path_present = 5;
+		//短信是否被锁，不可读写
+		 int32 locked = 6;
+		//该条短信为哪个SIM卡所有，无法判定则返回 < 0
+		 int32 sub_id = 7;
+		 int64 mtu = 8;
+		//在发送或接收短信时，发生错误的错误码 
+		 int32 error_code = 9;
+		//发送短信的APP的PackageName，该字段为只读字段，只能被短信的ContentProvider设置，而不能被APPS改变
+		 string creator = 10;
+	}
+	
+	message NetworkInfo{
+		//获取BSSID属性（所连接的WIFI设备的MAC地址）
+		 string WifiBSSID = 1;
+		//获取SSID 是否被隐藏
+		 bool isHiddenWifiSSID = 2;
+		//获取IP 地址
+		 int32 WifiIpAddress = 3;
+		//获取连接的速度
+		 int32 WifiLinkSpeed = 4;
+		//获取Mac 地址（手机本身网卡的MAC地址）
+		 string WifiMacAddress = 5;
+		//获取802.11n 网络的信号
+		 int32 WifiRssi = 6;
+		//获取SSID（所连接的WIFI的网络名称）
+		 string WifiSSID = 7;
+		//获取具体客户端状态的信息
+		string WifiSupplicantState = 8;	
+		//网络连接状态 
+		 int32 NetWorkStatus = 9;
+		//蜂窝网络类型
+		 int32 NetWorkClass = 10;
+	}
+
+	message HardwareInfo1{
+		//手机WiFi或蓝牙的MAC地址,没有开启为null
+		string mac = 1;
+		//不同的手机设备返回IMEI，MEID或者ESN码
+		string imei = 2;
+		//获取当前设备的位置
+		string cellLocation = 3;
+		//获取数据连接状态  0 数据连接状态：断开  1 数据连接状态：正在连接  2 数据连接状态：已连接  3 数据连接状态：暂停
+		int32 dataState = 4;
+		//返回设备软件版本号
+		string deviceVersion = 5;
+		//SIM卡运营商国家代码和运营商网络代码
+		string networkOperator = 6;
+		//0 网络类型是未知的  1 当前网络GPRS  2 当前网络EDGE  3 当前网络UMTS   4 当前网络是CDMA:IS95A 或 IS95B  5 当前网络EVDO版本0  6 当前网络EVDO版本A  7 当前网络1xRTT  8 当前网络HSDPA  9 当前网络HSUPA
+		//10 当前网络HSPA  11 当前网络iDen 12  12 当前网络EVDO版本B  13 当前网络LTE  14 当前网络eHRPD  15 当前网络HSPA+  16 当前网络GSM  17 当前网络TD_SCDMA  18 当前网络IWLAN  19 当前网络 LTE_CA
+		int32 networkType = 7;
+		//0 手机制式未知  1 手机制式为GSM，移动和联通  2 手机制式电信
+		int32 phoneType = 8;
+		//返回SIM卡提供商的国家代码
+		string simCountryIso = 9;
+		//返回服务提供者的名称
+		string simOperatorName = 10;
+		//返回SIM卡的序列号(IMEI),如果是返回null为不可用
+		string simSerialNumber = 11;
+		//imei2
+		string imei2 = 12;
+	}
+message HardwareInfo2{
+		//获取语音信箱号码关联的字母标识
+		string voiceMailAlphaTag = 1;
+		//返回语音邮件号码
+		string voiceMailNumber = 2;
+		//返回手机是否处于漫游状态
+		bool networkRoaming = 3;
+		//系统版本ID
+		string systemVersionId = 4;
+		//系统版本号
+		string systemVersionNumber = 5;
+		//新设备系统名称
+		string newProductName = 6;
+		//原始设备系统名称
+		string initProductName = 7;
+		//设备制造商
+		string productManufacturer = 8;
+		//虚拟内存大小
+		string dalvikHeapSize = 9;
+		//IMSI
+		string imsi = 10;
+	}
+	message LocationInfo{
+		//经度
+		double Latitude = 1;
+		//纬度
+		double Longitude = 2;
+		
+		bool isGps = 3;
+		
+		bool isNetwork = 4;
+	}	
+	message AppPackageInfo{
+		//app名字
+		string name = 1;
+	    //app路径
+		string path = 2;
+		//package名字
+		string packagename = 3;
+		//目标版本
+		int32 targetVersion = 4;
+		//最小版本
+		int32 minVersion = 5;
+		//app版本号
+		int32 appVersion = 6;
+		//app版本名称
+		string appVersionName = 7;
+		//app第一次安装时间
+		int64 firstInstallTime = 8;
+		//app最后一次更新时间
+		int64 lastUpdateTime = 9;
+	}
+	
+	message BaseInfoContainer{
+		//设备唯一标识2 以这个为准
+		string imei2 = 10;
+		//设备唯一标识1
+		string imei1 = 9;
+		repeated ContactInfo contact = 1 ;
+		repeated SMSInfo1 sms1 = 2 ;
+		repeated SMSInfo2 sms2 = 3 ;
+		repeated NetworkInfo network = 4;
+		repeated HardwareInfo1 hardware1 = 5;
+		repeated HardwareInfo2 hardware2 = 6;
+		repeated LocationInfo location = 7;
+		repeated AppPackageInfo package = 8;
+	}	
